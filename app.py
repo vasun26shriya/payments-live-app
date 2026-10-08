@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
+from urllib.parse import quote_plus
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, Response
 from fastapi.exceptions import RequestValidationError
@@ -40,6 +41,15 @@ class PaymentInput(OrderInput):
 @lru_cache(maxsize=1)
 def database():
     uri = os.getenv("MONGO_URI")
+    if not uri:
+        host = os.getenv("MONGO_HOST")
+        username = os.getenv("MONGO_USERNAME")
+        password = os.getenv("MONGO_PASSWORD")
+        if host and username and password:
+            uri = (
+                f"mongodb+srv://{quote_plus(username)}:{quote_plus(password)}@{host}/"
+                "?retryWrites=true&w=majority&appName=payments-live-app"
+            )
     if not uri:
         raise HTTPException(503, "Cloud database is not configured yet")
     db = MongoClient(

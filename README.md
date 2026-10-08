@@ -30,6 +30,8 @@ Open http://127.0.0.1:18082. Swagger is at `/api/docs`.
 
 Import this repository as a FastAPI project. Vercel detects `app.py`. Configure `MONGO_URI` as a sensitive production environment variable with a TLS MongoDB Atlas connection, and `MONGO_DATABASE=payments_live_app`. Use a dedicated database user that can access only this database. Never commit the connection string. Configure Atlas networking to allow the deployment using the narrowest network access available for your plan.
 
+Alternatively, set `MONGO_HOST`, `MONGO_USERNAME`, and sensitive `MONGO_PASSWORD` separately. The server constructs and safely escapes the connection string without exposing the password to browser JavaScript. This permits transferring the password directly into the platform's protected settings. Hobby functions use changing outbound IPs; a public Atlas access-list rule may be needed on this free setup. Database authentication and TLS remain enabled.
+
 Deploy the production branch and verify `/api/health` returns ready, then create and retrieve an order and run the retry experiment. A deployed page with a missing database is not a complete working deployment; health and writes return 503 until configured.
 
 ## Tests

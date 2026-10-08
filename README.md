@@ -72,7 +72,9 @@ This app is a simulation and is not a production financial system. It has no ide
 Project team:
 
 - [Shriya — @vasun26shriya](https://github.com/vasun26shriya)
-- [@YASHO-26SINGH](https://github.com/yasho-26singh)
-- [@SasyakSubudhi](https://github.com/SasyakSubudhi)
+- [@YASHO-26SINGH](https://github.com/yasho-26singh): [demo and interview guide](docs/demo-guide.md) ([PR #1](https://github.com/vasun26shriya/payments-live-app/pull/1))
+- [@SasyakSubudhi](https://github.com/SasyakSubudhi): [backend contract and recovery guide](docs/backend-guide.md) ([PR #2](https://github.com/vasun26shriya/payments-live-app/pull/2))
 
 This section lists the project team. GitHub's automatic Contributors graph reflects commits merged into the repository.
+
+The two guides are AI-assisted contributions published through each collaborator's connected account. Earlier implementation commits retain their original attribution.

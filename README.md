@@ -66,3 +66,13 @@ Coverage: paid and declined orders, retrieval, session isolation, concurrent dup
 ## Limitations
 
 This app is a simulation and is not a production financial system. It has no identity accounts, provider integration, webhooks, refunds, settlement, or audit compliance. For durable unattended recovery use a task queue or scheduler. Production systems need authenticated users, stronger abuse controls, operational alerts, backups, and a defined retention policy.
+
+## Contributors
+
+Project team:
+
+- [Shriya — @vasun26shriya](https://github.com/vasun26shriya)
+- [@YASHO-26SINGH](https://github.com/yasho-26singh)
+- [@SasyakSubudhi](https://github.com/SasyakSubudhi)
+
+This section lists the project team. GitHub's automatic Contributors graph reflects commits merged into the repository.

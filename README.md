@@ -1,8 +1,18 @@
 # Payments Lab
 
+[Live app](https://payments-live-app.vercel.app) · [API reference](https://payments-live-app.vercel.app/api/docs) · [Backend health](https://payments-live-app.vercel.app/api/health)
+
 A live, session-isolated payment simulation for the [Containerised Payments Microservices portfolio](https://github.com/vasun26shriya/containerised-payments-microservices).
 
 Create paid or declined orders, retrieve persistent results, and run three concurrent payment requests followed by an idempotency conflict. No real payment provider, card data, or money movement.
+
+## Verified deployment
+
+Deployed to the owner's Shriya Vercel account (`gigshield` workspace) with MongoDB Atlas on 8 October 2026. The public backend reports `ready` with MongoDB storage. Browser checks verified paid and declined orders, saved-order retrieval, persistence across page reload, three concurrent retries returning one transaction, and a changed payload returning HTTP 409. Automated integration tests use a real MongoDB instance.
+
+![Live concurrent retry and conflict verification](docs/live-retry-proof.jpg)
+
+The deployment uses Vercel Hobby and Atlas Free. These plans have usage limits; this app does not process real payments. No paid upgrade or payment card was required.
 
 ## Architecture
 

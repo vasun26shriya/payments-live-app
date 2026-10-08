@@ -9,5 +9,6 @@ __pycache__/
 tests/
 node_modules/
 README.md
+docs/
 *.log
 *.jpg

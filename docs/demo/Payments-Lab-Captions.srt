@@ -1,0 +1,211 @@
+1
+00:00:00,000 --> 00:00:00,854
+Hi Shriya.
+
+2
+00:00:00,854 --> 00:00:05,976
+This is Payments Lab, the live demonstration of your containerised payments project.
+
+3
+00:00:05,976 --> 00:00:11,952
+It shows how an online store can create orders, record payment results, and avoid
+
+4
+00:00:11,952 --> 00:00:14,940
+processing the same payment more than once.
+
+5
+00:00:14,940 --> 00:00:18,355
+The website and database are real and online.
+
+6
+00:00:18,355 --> 00:00:24,331
+The payments are simulated, so no bank is connected and no money is charged.
+
+7
+00:00:25,131 --> 00:00:27,314
+There are three main parts.
+
+8
+00:00:27,314 --> 00:00:32,552
+The dashboard is the frontend: it collects an amount and shows results.
+
+9
+00:00:32,552 --> 00:00:37,791
+The Fast API backend checks the request and processes the simulated payment.
+
+10
+00:00:37,791 --> 00:00:41,720
+Mongo D B Atlas saves the order and transaction.
+
+11
+00:00:41,720 --> 00:00:46,522
+Vercel hosts the website and runs the backend when requests arrive.
+
+12
+00:00:46,522 --> 00:00:52,633
+This hosted edition uses one backend application; the original project has two independently deployed
+
+13
+00:00:52,633 --> 00:00:53,070
+services.
+
+14
+00:00:53,870 --> 00:00:58,196
+Let's create an order for forty two rupees and choose Successful.
+
+15
+00:00:58,196 --> 00:01:02,522
+Clicking Create order sends a real request to the deployed backend.
+
+16
+00:01:02,522 --> 00:01:07,241
+The order starts pending, then becomes paid when the simulated payment succeeds.
+
+17
+00:01:07,241 --> 00:01:11,960
+The response contains an order I D and a transaction I D.
+
+18
+00:01:11,960 --> 00:01:15,893
+Notice that the stored amount is four thousand two hundred.
+
+19
+00:01:15,893 --> 00:01:20,219
+That represents paise, which avoids using imprecise decimal numbers for money.
+
+20
+00:01:21,019 --> 00:01:23,544
+Now I retrieve the saved order.
+
+21
+00:01:23,544 --> 00:01:28,595
+The same order and transaction identifiers come back from Mongo D B.
+
+22
+00:01:28,595 --> 00:01:33,224
+This is stored data, not a result invented by the dashboard.
+
+23
+00:01:33,224 --> 00:01:38,695
+Your order history also survives a page refresh in the same browser session.
+
+24
+00:01:38,695 --> 00:01:44,588
+The sandbox separates each browser session's records, and demo records expire after seven days.
+
+25
+00:01:44,588 --> 00:01:47,534
+It does not have registered user accounts.
+
+26
+00:01:48,334 --> 00:01:51,682
+Next I enter fifteen rupees and select Declined.
+
+27
+00:01:51,682 --> 00:01:54,193
+This time, the order becomes failed.
+
+28
+00:01:54,193 --> 00:02:00,053
+The backend still saves the result and transaction identifier, so we can tell what
+
+29
+00:02:00,053 --> 00:02:00,471
+happened.
+
+30
+00:02:00,471 --> 00:02:04,238
+A simulated decline is different from a network timeout.
+
+31
+00:02:04,238 --> 00:02:10,098
+If the outcome is uncertain, an order can remain pending until it is safely
+
+32
+00:02:10,098 --> 00:02:14,283
+recovered, rather than being incorrectly marked as a declined payment.
+
+33
+00:02:15,083 --> 00:02:17,650
+This is the most important experiment.
+
+34
+00:02:17,650 --> 00:02:23,640
+I send three payment requests at the same time, with one shared idempotency key.
+
+35
+00:02:23,640 --> 00:02:28,346
+All three succeed, but they return exactly the same transaction identifier.
+
+36
+00:02:28,346 --> 00:02:32,624
+A unique database index and an atomic operation prevent duplicates.
+
+37
+00:02:32,624 --> 00:02:36,475
+Then I change the amount and reuse the key.
+
+38
+00:02:36,475 --> 00:02:40,753
+The backend rejects that request with four oh nine Conflict.
+
+39
+00:02:40,753 --> 00:02:46,742
+Repeating a payment request is safe; clicking Create order again creates a separate order.
+
+40
+00:02:47,542 --> 00:02:51,749
+The original repository demonstrates the wider engineering system.
+
+41
+00:02:51,749 --> 00:02:55,955
+Orders and Payments are separate Fast API services.
+
+42
+00:02:55,955 --> 00:02:57,532
+Docker packages them.
+
+43
+00:02:57,532 --> 00:03:01,739
+Kubernetes and Helm manage deployment, upgrades, and rollback.
+
+44
+00:03:01,739 --> 00:03:05,945
+GitHub Actions runs automated checks and builds images.
+
+45
+00:03:05,945 --> 00:03:12,781
+Prometheus collects response times and errors, Grafana displays them, and Alertmanager handles alerts.
+
+46
+00:03:12,781 --> 00:03:19,090
+That local monitoring and Kubernetes stack is separate from this Vercel app.
+
+47
+00:03:19,090 --> 00:03:22,771
+This video demonstrates the hosted payment flow.
+
+48
+00:03:23,571 --> 00:03:29,867
+You can explain it like this: I built an order and payment simulation with
+
+49
+00:03:29,867 --> 00:03:35,264
+persistent storage, duplicate transaction protection, failure recovery, automated testing, and deployment monitoring.
+
+50
+00:03:35,264 --> 00:03:41,561
+To demonstrate it yourself, create a successful order, try a decline, retrieve the saved
+
+51
+00:03:41,561 --> 00:03:44,260
+result, then run the retry experiment.
+
+52
+00:03:44,260 --> 00:03:48,757
+The app uses free hosting plans within their usage limits.
+
+53
+00:03:48,757 --> 00:03:54,154
+It is a portfolio project, not a production system for real payments.

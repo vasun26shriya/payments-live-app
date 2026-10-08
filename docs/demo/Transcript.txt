@@ -1,0 +1,26 @@
+Payments Lab — Explained and Live Demo
+AI narration: Microsoft Zira. Actual public-app captures; dead time shortened. Captions use estimated timing.
+
+Your project, explained
+Hi Shriya. This is Payments Lab, the live demonstration of your containerised payments project. It shows how an online store can create orders, record payment results, and avoid processing the same payment more than once. The website and database are real and online. The payments are simulated, so no bank is connected and no money is charged.
+
+What happens behind the screen?
+There are three main parts. The dashboard is the frontend: it collects an amount and shows results. The Fast API backend checks the request and processes the simulated payment. Mongo D B Atlas saves the order and transaction. Vercel hosts the website and runs the backend when requests arrive. This hosted edition uses one backend application; the original project has two independently deployed services.
+
+Demo 1: a successful payment
+Let's create an order for forty two rupees and choose Successful. Clicking Create order sends a real request to the deployed backend. The order starts pending, then becomes paid when the simulated payment succeeds. The response contains an order I D and a transaction I D. Notice that the stored amount is four thousand two hundred. That represents paise, which avoids using imprecise decimal numbers for money.
+
+Demo 2: retrieve saved data
+Now I retrieve the saved order. The same order and transaction identifiers come back from Mongo D B. This is stored data, not a result invented by the dashboard. Your order history also survives a page refresh in the same browser session. The sandbox separates each browser session's records, and demo records expire after seven days. It does not have registered user accounts.
+
+Demo 3: a declined payment
+Next I enter fifteen rupees and select Declined. This time, the order becomes failed. The backend still saves the result and transaction identifier, so we can tell what happened. A simulated decline is different from a network timeout. If the outcome is uncertain, an order can remain pending until it is safely recovered, rather than being incorrectly marked as a declined payment.
+
+Demo 4: one key, one transaction
+This is the most important experiment. I send three payment requests at the same time, with one shared idempotency key. All three succeed, but they return exactly the same transaction identifier. A unique database index and an atomic operation prevent duplicates. Then I change the amount and reuse the key. The backend rejects that request with four oh nine Conflict. Repeating a payment request is safe; clicking Create order again creates a separate order.
+
+The complete engineering project
+The original repository demonstrates the wider engineering system. Orders and Payments are separate Fast API services. Docker packages them. Kubernetes and Helm manage deployment, upgrades, and rollback. GitHub Actions runs automated checks and builds images. Prometheus collects response times and errors, Grafana displays them, and Alertmanager handles alerts. That local monitoring and Kubernetes stack is separate from this Vercel app. This video demonstrates the hosted payment flow.
+
+What you can say in an interview
+You can explain it like this: I built an order and payment simulation with persistent storage, duplicate transaction protection, failure recovery, automated testing, and deployment monitoring. To demonstrate it yourself, create a successful order, try a decline, retrieve the saved result, then run the retry experiment. The app uses free hosting plans within their usage limits. It is a portfolio project, not a production system for real payments.

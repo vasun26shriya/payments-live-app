@@ -6,6 +6,14 @@ A live, session-isolated payment simulation for the [Containerised Payments Micr
 
 Create paid or declined orders, retrieve persistent results, and run three concurrent payment requests followed by an idempotency conflict. No real payment provider, card data, or money movement.
 
+## Video walkthrough
+
+[![Payments Lab explained and live demo](docs/demo/video-preview.jpg)](docs/demo/Payments-Lab-Explained-and-Live-Demo.mp4)
+
+[Watch or download the 3:55 walkthrough (MP4)](docs/demo/Payments-Lab-Explained-and-Live-Demo.mp4) · [Transcript](docs/demo/Transcript.txt) · [Captions](docs/demo/Payments-Lab-Captions.srt)
+
+The video explains the architecture and shows actual public-app captures of paid and declined orders, saved-result retrieval, and concurrent retry/conflict protection. It uses synthetic English narration and burned-in captions; pauses in the captured demo are shortened. The separate Docker/Kubernetes project is explained with a diagram, rather than presented as running on Vercel.
+
 ## Verified deployment
 
 Deployed to the owner's Shriya Vercel account (`gigshield` workspace) with MongoDB Atlas on 8 October 2026. The public backend reports `ready` with MongoDB storage. Browser checks verified paid and declined orders, saved-order retrieval, persistence across page reload, three concurrent retries returning one transaction, and a changed payload returning HTTP 409. Automated integration tests use a real MongoDB instance.
